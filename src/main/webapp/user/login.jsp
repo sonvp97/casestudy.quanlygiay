@@ -15,19 +15,19 @@
 </head>
 <body>
 <div class="container">
-    <div class="card w-50 mx-auto my-5">
+    <div class="card w-50 mx-auto my-5" >
         <div class="card-header text-center">User Login</div>
         <div class="card-body"></div>
         <form method="post" action="/User?action=login">
-            <div class="form-group">
+            <div class="form-group ml-3 mr-3">
                 <label>Email Address</label>
                 <input type="text" class="form-control" name="email" placeholder="Enter Your Email" required>
             </div>
-            <div class="form-group">
+            <div class="form-group ml-3 mr-3">
                 <label>Password</label>
                 <input type="password" class="form-control" name="pass" placeholder="********" required>
             </div>
-            <div class="text-right">
+            <div class="text-right mr-3">
                 <a href="/User?action=add">Register</a>
             </div>
             <div class="text-center">

@@ -30,7 +30,7 @@ CREATE TABLE `user` (
   `email` varchar(45) DEFAULT NULL,
   `pass` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'son',35,'15 nguyen van troi','nguyenvánonpm@gmail.com','0123456'),(2,'Nguyen van son',34,'18 nguyen van','nguyenvansonpm1@gmail.com','123456'),(3,'Nguyen van son',19,'18 nguyen van','nguyenvansonpm145@gmail.com','090807');
+INSERT INTO `user` VALUES (1,'son',35,'15 nguyen van troi','nguyenvánonpm@gmail.com','0123456'),(2,'Nguyen van son',34,'18 nguyen van','nguyenvansonpm1@gmail.com','123456'),(3,'Nguyen van son',19,'18 nguyen van','nguyenvansonpm145@gmail.com','090807'),(4,'Nguyen van son',34,'18 nguyen van','nguyenvansonpm1@gmail.com','123456'),(5,'Nguyen van son',45,'18 nguyen van','nguyenvansonpm1@gmail.com','123456'),(6,'Nguyen van son',45,'18 nguyen van','nguyenvansonpm1@gmail.com','123456');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-05 10:49:01
+-- Dump completed on 2022-12-06 16:24:35

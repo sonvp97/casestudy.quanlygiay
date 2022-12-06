@@ -14,6 +14,7 @@ public class UserServiceDAO implements UserService{
     private static final String SELECT_ALL_USER = "select * from user;";
     private static final String SELECT_BY_ID = "select * from user where id = ?;";
     private static final String SELECT_ALL_SHOE = "select * from shoe;";
+    private static final String SELECT_BY_EMAIL = "select * from user where email = ?;";
     private static final String INSERT_USER = "insert into user(name,age,address,email,pass) values (?,?,?,?,?);";
     Connection connection = null;
 
@@ -26,7 +27,6 @@ public class UserServiceDAO implements UserService{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return connection;
     }
     @Override
@@ -107,8 +107,8 @@ public class UserServiceDAO implements UserService{
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_SHOE);)
         {ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
+                int id = rs.getInt("idShoe");
+                String name = rs.getString("nameShoe");
                 String describe = rs.getString("describe");
                 double price = rs.getDouble("price");
                 String brand = rs.getString("brand");
@@ -123,5 +123,26 @@ public class UserServiceDAO implements UserService{
             throw new RuntimeException(e);
         }
         return list;
+    }
+
+    @Override
+    public User searchByEmail(String email) {
+        User user = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_EMAIL);)
+        {preparedStatement.setString(1,email);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int age = rs.getInt("age");
+                String address = rs.getString("address");
+                String pass = rs.getString("pass");
+                user = new User(id,name,age,address,email,pass);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

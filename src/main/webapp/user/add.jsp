@@ -33,6 +33,9 @@
                 <label>Email</label>
                 <input type="text" class="form-control" name="email" placeholder="Enter Your Email" required>
             </div>
+            <c:if test='${requestScope["message1"] != null}'>
+                <span class="message">${requestScope["message1"]}</span>
+            </c:if>
             <div class="form-group">
                 <label>Pass</label>
                 <input type="password" class="form-control" name="pass" placeholder="*******" required>

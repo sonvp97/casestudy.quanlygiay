@@ -12,13 +12,13 @@ public class ShoeServiceDAO implements ShoeService {
     private static final String URL = "jdbc:mysql://localhost:3306/demo3";
     private static final String USER = "root";
     private static final String PASS = "admin";
-    private static final String INSERT_SHOE = "insert into shoe(`name`,`describe`,price,brand,size,quantity,img) values (?,?,?,?,?,?,?);";
+    private static final String INSERT_SHOE = "insert into shoe(`nameShoe`,`describe`,price,brand,size,quantity,img) values (?,?,?,?,?,?,?);";
     private static final String SELECT_ALL_SHOE = "select * from shoe;";
-    private static final String SELECT_BY_ID_SHOE = "select * from shoe where id = ?;";
-    private static final String DELETE_BY_ID_SHOE = "DELETE from shoe where id = ?;";
+    private static final String SELECT_BY_ID_SHOE = "select * from shoe where idShoe = ?;";
+    private static final String DELETE_BY_ID_SHOE = "DELETE from shoe where idShoe = ?;";
     private static final String SORT_BY_Price = "select *from shoe order by price;";
-    private static final String SELECT_BY_NAME = "select * from shoe where name like ?;";
-    private static final String UPDATE_BY_ID_SHOE = "update shoe set name = ?,`describe` = ?,price = ?,brand = ?,size = ?,quantity = ?,img = ? where id = ?;";
+    private static final String SELECT_BY_NAME = "select * from shoe where nameShoe like ?;";
+    private static final String UPDATE_BY_ID_SHOE = "update shoe set nameShoe = ?,`describe` = ?,price = ?,brand = ?,size = ?,quantity = ?,img = ? where idShoe = ?;";
     Connection connection = null;
 
     protected Connection getConnection() {
@@ -41,8 +41,8 @@ public class ShoeServiceDAO implements ShoeService {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_SHOE);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
+                int id = rs.getInt("idShoe");
+                String name = rs.getString("nameShoe");
                 String describe = rs.getString("describe");
                 double price = rs.getDouble("price");
                 String brand = rs.getString("brand");
@@ -84,7 +84,7 @@ public class ShoeServiceDAO implements ShoeService {
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String name = rs.getString("name");
+                String name = rs.getString("nameShoe");
                 String describe = rs.getString("describe");
                 double price = rs.getDouble("price");
                 String brand = rs.getString("brand");
@@ -109,8 +109,8 @@ public class ShoeServiceDAO implements ShoeService {
         {preparedStatement.setString(1, "%"+name+"%");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                int id = rs.getInt("id");
-                String name1 = rs.getString("name");
+                int id = rs.getInt("idShoe");
+                String name1 = rs.getString("nameShoe");
                 String describe = rs.getString("describe");
                 double price = rs.getDouble("price");
                 String brand = rs.getString("brand");
@@ -164,8 +164,8 @@ public class ShoeServiceDAO implements ShoeService {
         PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_Price);)
         {ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
-                int id = rs.getInt("id");
-                String name1 = rs.getString("name");
+                int id = rs.getInt("idShoe");
+                String name1 = rs.getString("nameShoe");
                 String describe = rs.getString("describe");
                 double price = rs.getDouble("price");
                 String brand = rs.getString("brand");

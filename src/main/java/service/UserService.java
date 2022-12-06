@@ -11,4 +11,5 @@ public interface UserService {
     User findById(int id);
     boolean checkUser(String email,String pass);
     List<Shoe> findAllProduct();
+    User searchByEmail(String email);
 }
