@@ -10,6 +10,12 @@
 <html>
 <head>
     <title>Delete Shoe</title>
+    <style>
+        img{
+            width: 80px;
+            height: 80px;
+        }
+    </style>
 </head>
 <body>
 <h1><a href="/shoe">Back to list product</a></h1>

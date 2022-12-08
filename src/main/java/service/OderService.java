@@ -1,6 +1,7 @@
 package service;
 
 import oder.Oder;
+import oder.OderNew;
 import oder.OrderDetails;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface OderService {
     void addOder(int idUser);
     void addOderDetails(int idUser,int idShoe);
     Oder searchByIdOder(int idOder);
-    List<OrderDetails> groupByOrderDetails(int idUser);
+    List<OderNew> groupByOrderDetails(int idUser);
     void addProduct(int idShoe);
     void removeProduct(int idShoe);
     void removeOder(int idOder);

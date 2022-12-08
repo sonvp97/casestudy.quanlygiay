@@ -31,7 +31,7 @@ public class UserServlet extends HttpServlet {
                 showView(request,response);
                 break;
             default:
-                showLogin(request,response);
+                showList(request,response);
                 break;
         }
     }
@@ -53,7 +53,7 @@ public class UserServlet extends HttpServlet {
                 searchByName(request,response);
                 break;
             default:
-                showLogin(request,response);
+                showList(request,response);
                 break;
         }
     }
@@ -143,10 +143,22 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void showLogin(HttpServletRequest request, HttpServletResponse response) {
+    private void showList(HttpServletRequest request, HttpServletResponse response) {
+        String action = request.getParameter("action");
+        if(action==null){
+            action="";
+        }
+        if(action.equals("in")){
+            List<Shoe> list = shoeService.sortByPrice();
+            request.setAttribute("list",list);
+        } else if(action.equals("up")){
+            List<Shoe> list = shoeService.sortReduction();
+            request.setAttribute("list",list);
+        } else {
+            List<Shoe> list = userService.findAllProduct();
+            request.setAttribute("list",list);
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/index.jsp");
-        List<Shoe> list = userService.findAllProduct();
-        request.setAttribute("list",list);
         try {
             dispatcher.forward(request,response);
         } catch (ServletException e) {

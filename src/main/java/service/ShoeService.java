@@ -12,4 +12,5 @@ public interface ShoeService {
     void update(int id, Shoe shoe);
     void remove(int id);
     List<Shoe> sortByPrice();
+    List<Shoe> sortReduction();
 }

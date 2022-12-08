@@ -27,7 +27,10 @@
 <body>
 <%@include file="/includes/nav.jsp" %>
 <div class="container">
-    <div class="card-header my-3">All Products</div>
+    <div class="card-header my-3">All Products
+        <a href="/User?action=in"><button type="button" class="btn btn-light">Sort price increase</button></a>
+        <a href="/User?action=up"><button type="button" class="btn btn-light">Sort price reduction</button></a>
+    </div>
     <div class="row">
         <c:forEach items='${requestScope["list"]}' var="p">
             <a href="/User?action=view&&id=${p.getId()}&&email=${requestScope["email"].getEmail()}">

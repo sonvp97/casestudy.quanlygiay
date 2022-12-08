@@ -10,26 +10,39 @@
 <html>
 <head>
     <title>Search By Name</title>
+  <style>
+    img{
+      width: 40px;
+      height: 40px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <h1><a href="/shoe">Back to list product</a></h1>
-<table border="1">
+<table class="table table-striped">
+  <thead>
   <tr>
-    <td>Id</td>
-    <td>Name</td>
-    <td>Price</td>
-    <td>Image</td>
+    <th scope="col">Id</th>
+    <th scope="col">Name</th>
+    <th scope="col">Price</th>
+    <th scope="col">Image</th>
+    <th scope="col">Edit</th>
+    <th scope="col">Delete</th>
   </tr>
+  </thead>
+  <tbody>
   <c:forEach items='${requestScope["search"]}' var="search">
     <tr>
-      <td>${search.getId()}</td>
+      <td scope="row">${search.getId()}</td>
       <td>${search.getName()}</td>
       <td>${search.getPrice()}</td>
       <td><img src="image/${search.getImg()}"></td>
-      <td><a href="/shoe?action=edit&id=${search.getId()}">Edit</a></td>
-      <td><a href="/shoe?action=delete&id=${search.getId()}">Delete</a></td>
+      <td><a href="/shoe?action=edit&id=${search.getId()}"><button type="button" class="btn btn-light">Edit</button></a></td>
+      <td><a href="/shoe?action=delete&id=${search.getId()}"><button type="button" class="btn btn-primary">Delete</button></a></td>
     </tr>
   </c:forEach>
+  </tbody>
 </table>
 </body>
 </html>

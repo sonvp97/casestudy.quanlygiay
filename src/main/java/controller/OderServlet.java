@@ -1,6 +1,7 @@
 package controller;
 
 import oder.Oder;
+import oder.OderNew;
 import oder.OrderDetails;
 import product.Shoe;
 import service.OderService;
@@ -50,25 +51,11 @@ public class OderServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
     private void showCart(HttpServletRequest request, HttpServletResponse response) {
-        int idUser = Integer.parseInt(request.getParameter("idUser"));
-        int idShoe = Integer.parseInt(request.getParameter("idShoe"));
-        Oder oder = oderService.searchByIdOder(idUser);
-        if(oder==null){
-            oderService.addOder(idUser);
-            oder = oderService.searchByIdOder(idUser);
-            oderService.addOderDetails(oder.getIdOder(),idShoe);
-
-        }else {
-            oderService.addOderDetails(oder.getIdOder(),idShoe);
-        }
-        List<OrderDetails> list = oderService.groupByOrderDetails(oder.getIdOder());
-        request.setAttribute("cart",list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("cart/list.jsp");
         try {
             dispatcher.forward(request,response);

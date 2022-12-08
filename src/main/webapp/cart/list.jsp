@@ -3,6 +3,7 @@
 <%@ page import="oder.OrderDetails" %>
 <%@ page import="java.util.List" %>
 <%@ page import="service.*" %>
+<%@ page import="oder.OderNew" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -33,37 +34,52 @@
         </tr>
         </thead>
         <tbody>
-          <%
-            OderService oderService = new OderServiceDAO();
-            ShoeService shoeService = new ShoeServiceDAO();
-            int idUser = Integer.parseInt(request.getParameter("idUser"));
-            int idShoe = Integer.parseInt(request.getParameter("idShoe"));
-            Oder oder = oderService.searchByIdOder(idUser);
-            boolean check= false;
-            if(oder==null){
-              oderService.addOder(idUser);
-              oder = oderService.searchByIdOder(idUser);
-              check =true;
-            }
-            List<OrderDetails> list = oderService.groupByOrderDetails(oder.getIdOder());
-            if(list.isEmpty()){
-              oderService.removeOder(oder.getIdOder());
-            }
-            for (OrderDetails b : list){
-              if(b.getQuantityOder()>0){
-                check=true;
-              }
-            }
-            if(check){
-              oderService.addOderDetails(oder.getIdOder(),idShoe);
-            }
-          %>
-          <%
-          for (OrderDetails o : list){
+<%--            Oder oder = oderService.searchByIdOder(idUser);--%>
+<%--            boolean check= false;--%>
+<%--            if(oder==null){--%>
+<%--              oderService.addOder(idUser);--%>
+<%--              oder = oderService.searchByIdOder(idUser);--%>
+<%--              check =true;--%>
+<%--            }--%>
+<%--            List<OrderDetails> list = oderService.groupByOrderDetails(oder.getIdOder());--%>
+<%--            if(list.isEmpty()){--%>
+<%--              oderService.removeOder(oder.getIdOder());--%>
+<%--            }--%>
+<%--            for (OrderDetails b : list){--%>
+<%--              if(b.getQuantityOder()>0){--%>
+<%--                check=true;--%>
+<%--              }--%>
+<%--            }--%>
+<%--            if(check){--%>
+<%--              oderService.addOderDetails(oder.getIdOder(),idShoe);--%>
+<%--            }--%>
+<%--          %>--%>
+<%--          <%--%>
+<%--          for (OrderDetails o : list){--%>
+<%--            Shoe shoe = shoeService.findById(o.getIdShoe());--%>
+<%--          %><%--%>
+<%--          int total = (int) (shoe.getPrice()*o.getQuantityOder());--%>
+<%--          %>--%>
+<%
+  OderService oderService = new OderServiceDAO();
+  ShoeService shoeService = new ShoeServiceDAO();
+  int idUser = Integer.parseInt(request.getParameter("idUser"));
+  int idShoe = Integer.parseInt(request.getParameter("idShoe"));
+  Oder oder = oderService.searchByIdOder(idUser);
+  if(oder==null){
+    oderService.addOder(idUser);
+    oder = oderService.searchByIdOder(idUser);
+    oderService.addOderDetails(oder.getIdOder(),idShoe);
+
+  }else {
+    oderService.addOderDetails(oder.getIdOder(),idShoe);
+  }
+  List<OderNew> list = oderService.groupByOrderDetails(oder.getIdOder());
+  double subtotal = 0;
+  for (OderNew o : list){
             Shoe shoe = shoeService.findById(o.getIdShoe());
-          %><%
-          int total = (int) (shoe.getPrice()*o.getQuantityOder());
-          %>
+            subtotal+= shoe.getPrice()*o.getQuantity();
+%>
         <tr>
           <td class="col-sm-8 col-md-6">
             <div class="media">
@@ -75,10 +91,10 @@
               </div>
             </div></td>
           <td class="col-sm-1 col-md-1" style="text-align: center">
-            <input type="email" class="form-control" id="exampleInputEmail1" value="<%=o.getQuantityOder()%>">
+            <input type="email" class="form-control" id="exampleInputEmail1" value="<%=o.getQuantity()%>">
           </td>
           <td class="col-sm-1 col-md-1 text-center"><strong><%=shoe.getPrice()%></strong></td>
-          <td class="col-sm-1 col-md-1 text-center"><strong><%=total%></strong></td>
+          <td class="col-sm-1 col-md-1 text-center"><strong><%=o.getTotal()%></strong></td>
           <td class="col-sm-1 col-md-1">
             <a href="/Oder?action=more&&idShoe=<%=shoe.getId()%>&&idUser=${requestScope["email"].getId()}&&email=${requestScope["email"].getEmail()}" class="glyphicon glyphicon-remove" >Add Product</a>
             <a href="/Oder?action=remove&&idShoe=<%=shoe.getId()%>&&idUser=${requestScope["email"].getId()}&&email=${requestScope["email"].getEmail()}" class="glyphicon glyphicon-remove" >Remove</a>
@@ -91,21 +107,7 @@
           <td>   </td>
           <td>   </td>
           <td><h5>Subtotal</h5></td>
-          <td class="text-right"><h5><strong>$24.59</strong></h5></td>
-        </tr>
-        <tr>
-          <td>   </td>
-          <td>   </td>
-          <td>   </td>
-          <td><h5>Estimated shipping</h5></td>
-          <td class="text-right"><h5><strong>$6.94</strong></h5></td>
-        </tr>
-        <tr>
-          <td>   </td>
-          <td>   </td>
-          <td>   </td>
-          <td><h3>Total</h3></td>
-          <td class="text-right"><h3><strong>$31.53</strong></h3></td>
+          <td class="text-right"><h5><strong><%=subtotal%></strong></h5></td>
         </tr>
         <tr>
           <td>   </td>

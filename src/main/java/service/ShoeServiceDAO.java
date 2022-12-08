@@ -17,6 +17,7 @@ public class ShoeServiceDAO implements ShoeService {
     private static final String SELECT_BY_ID_SHOE = "select * from shoe where idShoe = ?;";
     private static final String DELETE_BY_ID_SHOE = "DELETE from shoe where idShoe = ?;";
     private static final String SORT_BY_Price = "select *from shoe order by price;";
+    private static final String SORT_BY_Reduction = "select *from shoe order by price DESC;";
     private static final String SELECT_BY_NAME = "select * from shoe where nameShoe like ?;";
     private static final String UPDATE_BY_ID_SHOE = "update shoe set nameShoe = ?,`describe` = ?,price = ?,brand = ?,size = ?,quantity = ?,img = ? where idShoe = ?;";
     Connection connection = null;
@@ -162,6 +163,31 @@ public class ShoeServiceDAO implements ShoeService {
         Shoe shoe = null;
         try (Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_Price);)
+        {ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("idShoe");
+                String name1 = rs.getString("nameShoe");
+                String describe = rs.getString("describe");
+                double price = rs.getDouble("price");
+                String brand = rs.getString("brand");
+                int size = rs.getInt("size");
+                int quantity = rs.getInt("quantity");
+                String img = rs.getString("img");
+                shoe = new Shoe(id, name1, describe, price, brand, size, quantity, img);
+                list.add(shoe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Shoe> sortReduction() {
+        List<Shoe> list = new ArrayList<>();
+        Shoe shoe = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_Reduction);)
         {ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
                 int id = rs.getInt("idShoe");

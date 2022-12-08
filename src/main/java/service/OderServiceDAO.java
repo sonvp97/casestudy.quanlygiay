@@ -1,6 +1,7 @@
 package service;
 
 import oder.Oder;
+import oder.OderNew;
 import oder.OrderDetails;
 
 import java.sql.*;
@@ -16,10 +17,11 @@ public class OderServiceDAO implements OderService {
     private static final String INSERT_ODER = "insert into oder(id,`date`,`status`) values(?,CURDATE(),0);";
     private static final String INSERT_ODER_DETAILS = "insert into orderdetails(oderId,idShoe,quantityOder) values(?,?,1);";
     private static final String SELECT_BY_ID_ODER = "select * from oderDetails where idOder = ?;";
-    private static final String GROUP_BY_ODER_DETAILS = "SELECT oderId,idShoe,SUM(quantityOder) as Quantity FROM orderdetails where oderId = ? GROUP BY idShoe;";
+//    private static final String GROUP_BY_ODER_DETAILS = "SELECT oderId,idShoe,SUM(quantityOder) as Quantity FROM orderdetails where oderId = ? GROUP BY idShoe;";
     private static final String SELECT_BY_ID_FALSE = "select * from oder where id = ?&&`status`=0;";
     private static final String ADD_PRODUCT = "delete from oderDetails where idShoe = ?;";
     private static final String DELETE_BY_ID = "delete from orderDetails where idShoe = ?;";
+    private static final String GROUP_BY_ODER_DETAILS = "SELECT ord.oderId,s.idShoe,SUM(ord.quantityOder)as quantity,s.nameShoe,s.price,(s.price*SUM(ord.quantityOder)) as total FROM shoe s join orderdetails ord on s.idShoe=ord.idShoe join oder o on o.idOder=ord.oderId where oderId = ? GROUP BY idShoe;";
     private static final String DELETE_ORDERDETAILS = "delete from order where idOder = ?;";
     Connection connection = null;
 
@@ -141,17 +143,22 @@ public class OderServiceDAO implements OderService {
     }
 
     @Override
-    public List<OrderDetails> groupByOrderDetails(int idOder) {
-        List<OrderDetails> list = new ArrayList<>();
+    public List<OderNew> groupByOrderDetails(int idOder) {
+        List<OderNew> list = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement p = connection.prepareStatement(GROUP_BY_ODER_DETAILS);) {
             p.setInt(1, idOder);
             ResultSet rs = p.executeQuery();
             while (rs.next()) {
+                int oderId = rs.getInt("oderId");
                 int idShoe = rs.getInt("idShoe");
                 int quantity = rs.getInt("Quantity");
-                OrderDetails orderDetails = new OrderDetails(idOder, idShoe, quantity);
-                list.add(orderDetails);
+                String nameShoe = rs.getString("nameShoe");
+                double price = rs.getDouble("price");
+                double total = rs.getDouble("total");
+//                OrderDetails orderDetails = new OrderDetails(idOder, idShoe, quantity);
+                OderNew order = new OderNew(oderId,idShoe,quantity,nameShoe,price,total);
+                list.add(order);
             }
         } catch (SQLException e) {
             e.printStackTrace();

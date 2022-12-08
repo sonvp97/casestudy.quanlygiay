@@ -35,6 +35,12 @@
                    aria-haspopup="true" aria-expanded="false">
                     Cart
                 </a>
+                <div class="dropdown-menu" aria-labelledby="user">
+                    <a class="dropdown-item" href="#">Setting</a>
+                    <a class="dropdown-item" href="#">Privacy</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/User">Log out</a>
+                </div>
             </li>
             <c:if test='${requestScope["email"]==null}'>
             <li class="nav-item">

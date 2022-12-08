@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>List Shoe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
     <style>
         img{
             width: 40px;
@@ -28,24 +29,29 @@
         </tr>
     </table>
 </form>
-<table border="1">
-
+<table class="table table-striped">
+    <thead>
     <tr>
-        <td>Id</td>
-        <td>Name</td>
-        <td>Price</td>
-        <td>Image</td>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Image</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
     </tr>
-    <c:forEach items='${requestScope["list"]}' var="list">
+    </thead>
+    <tbody>
+<c:forEach items='${requestScope["list"]}' var="list">
     <tr>
-        <td>${list.getId()}</td>
+        <td scope="row">${list.getId()}</td>
         <td>${list.getName()}</td>
         <td>${list.getPrice()}</td>
         <td><img src="image/${list.getImg()}"></td>
-        <td><a href="/shoe?action=edit&id=${list.getId()}">Edit</a></td>
-        <td><a href="/shoe?action=delete&id=${list.getId()}">Delete</a></td>
+        <td><a href="/shoe?action=edit&id=${list.getId()}"><button type="button" class="btn btn-light">Edit</button></a></td>
+        <td><a href="/shoe?action=delete&id=${list.getId()}"><button type="button" class="btn btn-primary">Delete</button></a></td>
     </tr>
-    </c:forEach>
+</c:forEach>
+    </tbody>
 </table>
 
 </body>
